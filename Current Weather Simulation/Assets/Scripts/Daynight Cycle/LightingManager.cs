@@ -19,6 +19,8 @@ public class LightingManager : MonoBehaviour
         {
             TimeOfDay += Time.deltaTime;
             TimeOfDay %= 24;
+
+            int currentTimeInSeconds = System.DateTime.Now.Second;
         }
 
         UpdateLighting(TimeOfDay / 24f);
