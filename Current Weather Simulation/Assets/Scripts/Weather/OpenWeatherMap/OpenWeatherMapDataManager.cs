@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Globalization;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
+using System;
 
 public class OpenWeatherMapDataManager : MonoBehaviour
 {
@@ -20,6 +22,8 @@ public class OpenWeatherMapDataManager : MonoBehaviour
 
     private List<City> cityList;
 
+    private Timer updateTimer;
+
     private OpenWeatherMapDataManager()
     {
         //Initialize the list of available cities
@@ -29,7 +33,12 @@ public class OpenWeatherMapDataManager : MonoBehaviour
             cityList = JsonConvert.DeserializeObject<List<City>>(json);
         }
 
-        Debug.Log(getWeatherCondition("Kungälv"));
+        updateTimer = new Timer(
+            e => Debug.Log(getWeatherCondition("Diseröd")),
+            null,
+            TimeSpan.Zero,
+            TimeSpan.FromMinutes(10)
+        );
     }
 
     private int isCityValid(string cityName)
